@@ -1,5 +1,4 @@
-#@load /opt/bro/scripts/user/capstone/dnscat2
-@load /opt/bro/scripts/user/capstone/whitelist
-@load /opt/bro/scripts/user/capstone/txt
-#@load /opt/bro/scripts/user/capstone/tunnelling
-@load /opt/bro/scripts/user/capstone/tunnelling/fingerprint
+#@load /opt/bro-scripts/dnscat2
+@load /opt/bro-scripts/whitelist
+@load /opt/bro-scripts/txt
+@load /opt/bro-scripts/tunnelling

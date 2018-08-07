@@ -1,3 +1,9 @@
+# This module is used to detect base64 encoded TXT records which hold malicious payloads. This is done by 
+# attempting to decode the encoded strings and match for keywords such as PowerShell.
+# This module will not be able to detect keywords that are broken-up or split across multiple strings.
+#
+# Written by Stephan Davidson and Ferdous Saljooki
+
 @load base/frameworks/sumstats
 
 module TXT;

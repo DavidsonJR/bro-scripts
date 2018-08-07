@@ -59,12 +59,12 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: vector o
             response_size = string_size;
         }
         else if ((request_size == 146) && (response_size == 82) && (string_size == 34)) { 
-            #LOG
             print fmt("DNSCAT2 TUNNELLING Detected! Beacon out.");
+            Log::write(TUNNELLING::LOG, [$evt="DNSCAT2 Detected", $ts=network_time(), $id=c$id, $data=c$dns$query]);
         }
         else {
-            #LOG
             print fmt("SUSPECTED TUNNELLING -- TXT Response: %d characters in a subdomain", string_size);
+            Log::write(TUNNELLING::LOG, [$evt="SUSPECTED TUNNELLING -- TXT", $ts=network_time(), $id=c$id, $data=c$dns$query]);
         }
     } else {
         return;
@@ -93,12 +93,12 @@ event dns_CNAME_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string
             response_size = string_size;
         }
         else if ((request_size == 146) && (response_size == 82) && (string_size == 34)) { 
-            #LOG
             print fmt("DNSCAT2 TUNNELLING Detected! Beacon out.");
+            Log::write(TUNNELLING::LOG, [$evt="DNSCAT2 Detected", $ts=network_time(), $id=c$id, $data=c$dns$query]);
         }
         else {
-            #LOG
             print fmt("SUSPECTED TUNNELLING -- CNAME Response: %d characters in a subdomain", string_size);
+            Log::write(TUNNELLING::LOG, [$evt="SUSPECTED TUNNELLING -- CNAME", $ts=network_time(), $id=c$id, $data=c$dns$query]);
         }
     } else {
         return;
@@ -127,12 +127,12 @@ event dns_MX_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string, p
             response_size = string_size;
         }
         else if ((request_size == 146) && (response_size == 82) && (string_size == 34)) { 
-            #LOG
             print fmt("DNSCAT2 TUNNELLING Detected! Beacon out.");
+            Log::write(TUNNELLING::LOG, [$evt="DNSCAT2 Detected", $ts=network_time(), $id=c$id, $data=c$dns$query]);
         }
         else {
-            #LOG
             print fmt("SUSPECTED TUNNELLING -- MX Response: %d characters in a subdomain", string_size);
+            Log::write(TUNNELLING::LOG, [$evt="SUSPECTED TUNNELLING -- MX", $ts=network_time(), $id=c$id, $data=c$dns$query]);
         }
     } else {
         return;

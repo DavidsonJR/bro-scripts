@@ -3,7 +3,6 @@
 #
 # Authors: Stephan Davidson and Ferdous Saljooki
 
-
 module DNSCAT2;
 
 event dns_request (c: connection, msg: dns_msg, query: string, qtype: count, qclass: count) {

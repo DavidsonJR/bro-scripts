@@ -12,5 +12,5 @@ export {
 }
 
 event bro_init() {
-	Log::create_stream(FINGERPRINT::LOG, [$columns=Info, $path="/opt/bro/spool/manager/capstone_fingerprint"]);
+	Log::create_stream(TUNNELLING::LOG, [$columns=Info, $path="/opt/bro/spool/manager/capstone_tunnelling"]);
 }

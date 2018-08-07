@@ -1,3 +1,8 @@
+# This module is designed to detect malicious tunnelling through DNS. In its current state, it's also able to fully
+# fingerprint DNSCAT2.
+#
+# Authors: Stephan Davidson and Ferdous Saljooki
+
 module TUNNELLING;
 
 global request_size = 0;
@@ -72,6 +77,7 @@ event dns_CNAME_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string
         }
     }
 }
+
 event dns_MX_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string, preference: count) {
  local elements = split_string(c$dns$query, /\./);
     local size_of_elements = 0;

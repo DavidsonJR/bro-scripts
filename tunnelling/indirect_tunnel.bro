@@ -31,7 +31,7 @@ event dns_request (c: connection, msg: dns_msg, query: string, qtype: count, qcl
         if ((string_size == 146) && (nums[0] == 0)) {
             nums[0] = string_size;
             #request_size = string_size;
-        } else if ((string_size == 34) && (nums[2] == 1) {
+        } else if ((string_size == 34) && (nums[2] == 1)) {
             nums[2] = 1;
         }
     } else {

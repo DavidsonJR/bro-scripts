@@ -1,0 +1,37 @@
+@load base/frameworks/sumstats
+
+module TXT;
+
+event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_vec) {
+
+    SumStats::observe("dns.observe", [$host=c$id$orig_h], [$str=c$dns$query]);
+
+    if (r_queries != 0) {
+	Log::write(TXT::LOG, [$evt="Excessive TXT Queries", $ts=network_time(), $id=c$id, $data=fmt("Queries: %.0f. %d are unique", r_queries, r_unique)]);
+	r_unique = 0;
+	r_queries = 0;
+    }
+
+    local txt_str = split_string(c$dns$answers[0], / /)[2]; #TXT Data
+    local txt_len = |txt_str|; #Length of the TXT Record as INT
+    while ((txt_len % 8) != 0) { #Pads the string to 8 byte boundry for base64 decoding
+            txt_str += "0";
+	    txt_len += 1;
+	}
+	local base_64 = match_pattern(txt_str, base_64_string);
+	if (base_64$matched == T) {
+	    local s1 = decode_base64(txt_str); #Base64 decodes the string (attempts, regardless of encoding)
+	    local s2 = to_string_literal(s1); #Coverts String to literal string (changes hex values to string)
+            local s3 = split_string(s2, /\\x[a-fA-F0-9]{2}/); #splits the string into chars
+	    local s4 = join_string_vec(s3, ""); #removes the split (weird but whatever)
+
+	    if (scripting_languages in to_lower(s4)) {
+	        Log::write(TXT::LOG, [$evt="Malicious Keyword Match Detected", $ts=network_time(), $id=c$id, $data=s4]);	    
+	    	print fmt("%s has generate a keyword match: %s", c$id$orig_h, s4);
+	    }
+	    else {
+	    	Log::write(TXT::LOG, [$evt="Base64 TXT Record Detected", $ts=network_time(), $id=c$id, $data=txt_str]);
+	    	print fmt("Base64 Detected: %s", txt_str);
+	    }
+	}
+}

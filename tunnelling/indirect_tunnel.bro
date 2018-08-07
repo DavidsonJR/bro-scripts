@@ -98,7 +98,7 @@ event dns_CNAME_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string
         }
         else {
             #LOG
-            print fmt("SUSPECTED TUNNELLING -- TXT Response: %d characters in a subdomain", string_size);
+            print fmt("SUSPECTED TUNNELLING -- CNAME Response: %d characters in a subdomain", string_size);
         }
     } else {
         return;
@@ -132,7 +132,7 @@ event dns_MX_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string, p
         }
         else {
             #LOG
-            print fmt("SUSPECTED TUNNELLING -- TXT Response: %d characters in a subdomain", string_size);
+            print fmt("SUSPECTED TUNNELLING -- MX Response: %d characters in a subdomain", string_size);
         }
     } else {
         return;

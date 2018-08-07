@@ -1,9 +1,9 @@
-module TUNNELLING;
-
 # This module is used to attempt fingerprinting of known DNS tunnelling payloads via direct
 # tunnelling. This does not work for tunnelling over an actual DNS server (ie. Google).
 #
 # Written by Stephan Davidson and Ferdous Saljooki
+
+module TUNNELLING;
 
 event dns_message(c: connection, is_orig: bool, msg: dns_msg, len: count) {
 	if (!(c$id$resp_h in dns_whitelist)) {

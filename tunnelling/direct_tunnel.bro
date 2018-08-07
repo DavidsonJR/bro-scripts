@@ -13,27 +13,27 @@ event dns_message(c: connection, is_orig: bool, msg: dns_msg, len: count) {
 					#DNSCAT
 					if (|(find_all(c$dns$query, /dnscat/))| == 1) {
 						print fmt("Fingerprinted! DNSCAT Detected -- Attacking IP: %s | Victim IP: %s", c$id$resp_h, c$id$orig_h);
-						Log::write(FINGERPRINT::LOG, [$evt="DNSCAT Detected", $ts=network_time(), $id=c$id, $data=c$dns$query]);
+						Log::write(TUNNELLING::LOG, [$evt="DNSCAT Detected", $ts=network_time(), $id=c$id, $data=c$dns$query]);
 					}
 					#DNS2TCP -- Failed attempt to Fingerprint. Needs work.
 					else if (|(find_all(c$dns$query, /dn8AAAA/))| == 1) {
 						print fmt("Fingreprinted! DNS2TCP Detected -- Attacking IP: %s | Victim IP: %s", c$id$resp_h, c$id$orig_h);
-						Log::write(FINGERPRINT::LOG, [$evt="DNS2TCP Detected", $ts=network_time(), $id=c$id, $data=c$dns$query]);
+						Log::write(TUNNELLING::LOG, [$evt="DNS2TCP Detected", $ts=network_time(), $id=c$id, $data=c$dns$query]);
 					}
 					#Unable to Fingerprint
 					else {
 						print fmt("SUSPECT DNS: %s", c$id$resp_h);
-						Log::write(FINGERPRINT::LOG, [$evt="Suspect DNS Detected", $ts=network_time(), $id=c$id, $data="DNS not in Whitelist. Unable to Fingerprint."]);					
+						Log::write(TUNNELLING::LOG, [$evt="Suspect DNS Detected", $ts=network_time(), $id=c$id, $data="DNS not in Whitelist. Unable to Fingerprint."]);					
 					}
 				}
 				else {
 					print fmt("SUSPECT DNS: %s", c$id$resp_h);
-					Log::write(FINGERPRINT::LOG, [$evt="Suspect DNS Detected", $ts=network_time(), $id=c$id, $data="DNS not in Whitelist. Empty Query."]);
+					Log::write(TUNNELLING::LOG, [$evt="Suspect DNS Detected", $ts=network_time(), $id=c$id, $data="DNS not in Whitelist. Empty Query."]);
 				}
 			}
 			else {
 				print fmt("SUSPECT DNS: %s", c$id$resp_h);
-				Log::write(FINGERPRINT::LOG, [$evt="Suspect DNS Detected", $ts=network_time(), $id=c$id, $data="DNS not in Whitlist. Port not in Whitelist."]);
+				Log::write(TUNNELLING::LOG, [$evt="Suspect DNS Detected", $ts=network_time(), $id=c$id, $data="DNS not in Whitlist. Port not in Whitelist."]);
 			}
 		} 
 	}

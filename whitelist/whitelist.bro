@@ -1,3 +1,8 @@
+# This module contains a list of some of the common dns servers and well-known dns ports. 
+# This is used to detect direct tunnelling from an unauthorized dns server.
+#
+# Written by Stephan Davidson and Ferdous Saljooki
+
 #module WHITELIST;
 
 global dns_whitelist = {

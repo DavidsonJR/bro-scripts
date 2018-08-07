@@ -6,7 +6,7 @@
 module TUNNELLING;
 
 #DECAY
-global nums: table[int] &default=0 &create_expire=15secs;
+global nums: table[int] of count &default=0 &create_expire=15secs;
 
 #global request_size = 0;
 #global response_size = 0;

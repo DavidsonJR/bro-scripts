@@ -11,3 +11,4 @@ event dns_request (c: connection, msg: dns_msg, query: string, qtype: count, qcl
 		print fmt("Proof of Concept - DNSCAT detected!");
 	}
 }
+ 

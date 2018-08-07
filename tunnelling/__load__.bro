@@ -1,2 +1,3 @@
 @load ./main.bro
-@load ./tunnelling.bro
+@load ./indirect_tunnel.bro
+@load ./direct_tunnel.bro

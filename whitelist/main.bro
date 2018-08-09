@@ -1,5 +1,3 @@
 module WHITELIST;
 
-event bro_init() {
-
-}
+event bro_init() {}

@@ -18,7 +18,6 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_v
 		r_unique = 0;
 		r_queries = 0;
     	}
-
     	local txt_str0 = split_string(c$dns$answers[0], / /); #TXT Data
     	txt_str0[0] = "";
     	txt_str0[1] = "";
@@ -34,18 +33,16 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_v
             		txt_str += "0";
 	    		txt_len += 1;
 		}
-	local s1 = decode_base64(txt_str); #Base64 decodes the string (attempts, regardless of encoding)
-	local s2 = to_string_literal(s1); #Coverts String to literal string (changes hex values to string)
-        local s3 = split_string(s2, /\\x[a-fA-F0-9]{2}/); #splits the string into chars
-	local s4 = join_string_vec(s3, ""); #removes the split (weird but whatever)
-
-	    if (scripting_languages in to_lower(s4)) {
-	        Log::write(TXT::LOG, [$evt="Malicious Keyword Match Detected", $ts=network_time(), $id=c$id, $data=s4]);	    
-	    	print fmt("%s has generate a keyword match: %s", c$id$orig_h, s4);
-	    }
-	    else {
-	    	Log::write(TXT::LOG, [$evt="Base64 TXT Record Detected", $ts=network_time(), $id=c$id, $data=txt_str]);
-	    	print fmt("Base64 Detected: %s", txt_str);
-	    }
+		local s1 = decode_base64(txt_str); #Base64 decodes the string (attempts, regardless of encoding)
+		local s2 = to_string_literal(s1); #Coverts String to literal string (changes hex values to string)
+        	local s3 = split_string(s2, /\\x[a-fA-F0-9]{2}/); #splits the string into chars
+		local s4 = join_string_vec(s3, ""); #removes the split (weird but whatever)
+		if (scripting_languages in to_lower(s4)) {
+			Log::write(TXT::LOG, [$evt="Malicious Keyword Match Detected", $ts=network_time(), $id=c$id, $data=s4]);	    
+	    		print fmt("%s has generate a keyword match: %s", c$id$orig_h, s4);
+		} else {
+	    		Log::write(TXT::LOG, [$evt="Base64 TXT Record Detected", $ts=network_time(), $id=c$id, $data=txt_str]);
+	    		print fmt("Base64 Detected: %s", txt_str);
+		}
 	} 
 }

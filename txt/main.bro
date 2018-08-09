@@ -15,8 +15,6 @@ export {
 
 const excessive_limit: double = 15  &redef;
 const time_interval = 30 secs &redef;
-const scripting_languages = /veil|python|powershell/ &redef;
-const base_64_string = /^[a-zA-Z0-9\/"$+.]*={0,2}$/ &redef;
 
 global r_queries = 0.0;
 global r_unique = 0;

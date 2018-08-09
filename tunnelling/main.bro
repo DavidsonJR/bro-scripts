@@ -2,7 +2,6 @@ module TUNNELLING;
 
 export {
 	redef enum Log::ID += { LOG };
-
 	type Info: record {
 		evt: string &log;
 		ts: time &log;

@@ -19,7 +19,10 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_v
 		r_queries = 0;
     	}
 
-    	local txt_str = split_string(c$dns$answers[0], / /)[2]; #TXT Data
+    	local txt_str0 = split_string(c$dns$answers[0], / /); #TXT Data
+    	txt_str0[0] = "";
+    	txt_str0[1] = "";
+    	local txt_str = join_string_vec(txt_str0, "");
     	local txt_len = |txt_str|; #Length of the TXT Record as INT
     	local base_64 = match_pattern(txt_str, base_64_string);
 	

@@ -10,7 +10,7 @@ event dns_message(c: connection, is_orig: bool, msg: dns_msg, len: count) {
 		if (c$id$resp_p in dns_ports) {
 			if (c?$dns) {
 				if (c$dns?$query) {
-					#DNSCAT
+					#DNSCAT -- Fingerprinting of Direct Tunnelling
 					if (|(find_all(c$dns$query, /dnscat/))| == 1) {
 						print fmt("Fingerprinted! DNSCAT Detected -- Attacking IP: %s | Victim IP: %s", c$id$resp_h, c$id$orig_h);
 						Log::write(TUNNELLING::LOG, [$evt="DNSCAT Detected", $ts=network_time(), $id=c$id, $data=c$dns$query]);

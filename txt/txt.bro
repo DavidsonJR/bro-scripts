@@ -8,19 +8,20 @@
 
 module TXT;
 
+const scripting_languages = /veil|python|powershell/ &redef;
+const base_64_string = /^[a-zA-Z0-9\/"$+.]*={0,2}$/ &redef;
+
 event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_vec) {
+	SumStats::observe("dns.observe", [$host=c$id$orig_h], [$str=c$dns$query]);
+    	if (r_queries != 0) {
+		Log::write(TXT::LOG, [$evt="Excessive TXT Queries", $ts=network_time(), $id=c$id, $data=fmt("Queries: %.0f. %d are unique", r_queries, r_unique)]);
+		r_unique = 0;
+		r_queries = 0;
+    	}
 
-    SumStats::observe("dns.observe", [$host=c$id$orig_h], [$str=c$dns$query]);
-
-    if (r_queries != 0) {
-	Log::write(TXT::LOG, [$evt="Excessive TXT Queries", $ts=network_time(), $id=c$id, $data=fmt("Queries: %.0f. %d are unique", r_queries, r_unique)]);
-	r_unique = 0;
-	r_queries = 0;
-    }
-
-    local txt_str = split_string(c$dns$answers[0], / /)[2]; #TXT Data
-    local txt_len = |txt_str|; #Length of the TXT Record as INT
-    while ((txt_len % 8) != 0) { #Pads the string to 8 byte boundry for base64 decoding
+    	local txt_str = split_string(c$dns$answers[0], / /)[2]; #TXT Data
+    	local txt_len = |txt_str|; #Length of the TXT Record as INT
+    	while ((txt_len % 8) != 0) { #Pads the string to 8 byte boundry for base64 decoding
             txt_str += "0";
 	    txt_len += 1;
 	}
@@ -39,5 +40,10 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_v
 	    	Log::write(TXT::LOG, [$evt="Base64 TXT Record Detected", $ts=network_time(), $id=c$id, $data=txt_str]);
 	    	print fmt("Base64 Detected: %s", txt_str);
 	    }
+	} else {
+		if (scripting_languages in to_lower(txt_str)) {
+	        	Log::write(TXT::LOG, [$evt="Malicious Keyword Match Detected", $ts=network_time(), $id=c$id, $data=s4]);	    
+	    		print fmt("%s has generate a keyword match: %s", c$id$orig_h, txt_str);
+	    	}
 	}
 }

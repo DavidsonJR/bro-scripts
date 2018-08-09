@@ -6,13 +6,13 @@
 #module WHITELIST;
 
 global dns_whitelist = {
-	8.8.8.8, #Google
-	8.8.4.4, #Google
-	2.2.2.2, #L3 Communications
-	2.2.2.3, #L3 Communications
-	10.0.1.1, #Gateway / Defined DNS by Company Policy. Add others, as needed.
-	10.0.1.255, #Broadcast Address
-	224.0.0.251, #mDNS
+	8.8.8.8, 	#Google
+	8.8.4.4, 	#Google
+	2.2.2.2, 	#L3 Communications
+	2.2.2.3, 	#L3 Communications
+	10.0.1.1, 	#Gateway / Defined DNS by Company Policy. Add others, as needed.
+	10.0.1.255, 	#Broadcast Address
+	224.0.0.251, 	#mDNS
 	224.0.0.252 
 };
 

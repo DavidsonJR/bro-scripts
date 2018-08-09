@@ -24,7 +24,7 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_v
     	local base_64 = match_pattern(txt_str, base_64_string);
 	
 	if (base_64$matched == T) {
-		while (!("==" in txt_str)) {
+		if (!("==" in txt_str)) {
 	    		while ((txt_len % 8) != 0) { #Pads the string to 8 byte boundry for base64 decoding
             			txt_str += "0";
 	    			txt_len += 1;

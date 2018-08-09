@@ -21,11 +21,11 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_v
 
     	local txt_str = split_string(c$dns$answers[0], / /)[2]; #TXT Data
     	local txt_len = |txt_str|; #Length of the TXT Record as INT
-    	#while ((txt_len % 8) != 0) { #Pads the string to 8 byte boundry for base64 decoding
-        #    txt_str += "0";
-	#    txt_len += 1;
-	#}
-	local base_64 = match_pattern(txt_str, base_64_string);
+    	local base_64 = match_pattern(txt_str, base_64_string);
+	while ((txt_len % 8) != 0) { #Pads the string to 8 byte boundry for base64 decoding
+            txt_str += "0";
+	    txt_len += 1;
+	}
 	if (base_64$matched == T) {
 	    local s1 = decode_base64(txt_str); #Base64 decodes the string (attempts, regardless of encoding)
 	    local s2 = to_string_literal(s1); #Coverts String to literal string (changes hex values to string)

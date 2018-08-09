@@ -26,18 +26,18 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_v
         txt_str = strip(txt_str);
     	local txt_len = |txt_str|; #Length of the TXT Record as INT
     	local base_64 = match_pattern(txt_str, base_64_string);
-	
-	if (base_64$matched == T) {
-		if (!("==" in txt_str)) {
-	    		while ((txt_len % 8) != 0) { #Pads the string to 8 byte boundry for base64 decoding
-            			txt_str += "0";
-	    			txt_len += 1;
-			}
-  	    	}
-	    local s1 = decode_base64(txt_str); #Base64 decodes the string (attempts, regardless of encoding)
-	    local s2 = to_string_literal(s1); #Coverts String to literal string (changes hex values to string)
-            local s3 = split_string(s2, /\\x[a-fA-F0-9]{2}/); #splits the string into chars
-	    local s4 = join_string_vec(s3, ""); #removes the split (weird but whatever)
+	if (scripting_languages in to_lower(txt_str)) {
+		Log::write(TXT::LOG, [$evt="Malicious Keyword Match Detected", $ts=network_time(), $id=c$id, $data=txt_str]);	    
+		print fmt("%s has generate a keyword match: %s", c$id$orig_h, txt_str);	
+	} else if (base_64$matched == T) {
+		while ((txt_len % 8) != 0) { #Pads the string to 8 byte boundry for base64 decoding
+            		txt_str += "0";
+	    		txt_len += 1;
+		}
+	local s1 = decode_base64(txt_str); #Base64 decodes the string (attempts, regardless of encoding)
+	local s2 = to_string_literal(s1); #Coverts String to literal string (changes hex values to string)
+        local s3 = split_string(s2, /\\x[a-fA-F0-9]{2}/); #splits the string into chars
+	local s4 = join_string_vec(s3, ""); #removes the split (weird but whatever)
 
 	    if (scripting_languages in to_lower(s4)) {
 	        Log::write(TXT::LOG, [$evt="Malicious Keyword Match Detected", $ts=network_time(), $id=c$id, $data=s4]);	    
@@ -47,10 +47,5 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_v
 	    	Log::write(TXT::LOG, [$evt="Base64 TXT Record Detected", $ts=network_time(), $id=c$id, $data=txt_str]);
 	    	print fmt("Base64 Detected: %s", txt_str);
 	    }
-	} else {
-		if (scripting_languages in to_lower(txt_str)) {
-	        	Log::write(TXT::LOG, [$evt="Malicious Keyword Match Detected", $ts=network_time(), $id=c$id, $data=s4]);	    
-	    		print fmt("%s has generate a keyword match: %s", c$id$orig_h, txt_str);
-	    	}
-	}
+	} 
 }

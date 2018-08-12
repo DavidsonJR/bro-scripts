@@ -30,7 +30,7 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_v
 		print fmt("%s has generate a keyword match: %s", c$id$orig_h, txt_str);	
 	} else if (base_64$matched == T) {
 		while ((txt_len % 8) != 0) { #Pads the string to 8 byte boundry for base64 decoding
-            		txt_str += "0";
+            		txt_str = "0" + txt_str;
 	    		txt_len += 1;
 		}
 		local s1 = decode_base64(txt_str); #Base64 decodes the string (attempts, regardless of encoding)

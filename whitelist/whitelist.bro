@@ -5,7 +5,7 @@
 
 #module WHITELIST;
 
-global dns_whitelist = {
+global dns_v4_ip = {
 	8.8.8.8, 	#Google
 	8.8.4.4, 	#Google
 	2.2.2.2, 	#L3 Communications
@@ -14,6 +14,10 @@ global dns_whitelist = {
 	10.0.1.255, 	#Broadcast Address
 	224.0.0.251, 	#mDNS
 	224.0.0.252 
+};
+
+global dns_v6_ip {
+	ff02:::1:3,	#mDNS
 };
 
 global dns_ports = {

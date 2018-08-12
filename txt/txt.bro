@@ -43,7 +43,7 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_v
 	    		print fmt("%s has generate a keyword match: %s", c$id$orig_h, s4);
 		} else {
 	    		Log::write(TXT::LOG, [$evt="Base64 TXT Record Detected", $ts=network_time(), $id=c$id, $data=txt_str]);
-	    		if (base64_suppression[0] == 5) {
+	    		if (base64_suppression[0] >= 5) {
 				print fmt("Base64 Detected: %s . Console Suppression for 10secs.", txt_str);
 			} else {
 				print fmt("Base64 Detected: %s", txt_str);

@@ -8,6 +8,15 @@ module TUNNELLING;
 global nums: table[int] of count &default=0 &write_expire=15secs;
 
 event dns_request (c: connection, msg: dns_msg, query: string, qtype: count, qclass: count) {
+	if (!(c$id$resp_p in dns_ports)) {
+        	return;
+    	}
+	if (!(c?$dns)) {
+        	return;
+	}
+    	if (!(c$dns?$query)) {
+        	return;
+	}
 	local elements = split_string(c$dns$query, /\./);
 	local size_of_elements = 0;
 	local string_size = 0;
@@ -35,6 +44,15 @@ event dns_request (c: connection, msg: dns_msg, query: string, qtype: count, qcl
 }
 
 event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: vector of string) {
+	if (!(c$id$resp_p in dns_ports)) {
+        	return;
+    	}
+	if (!(c?$dns)) {
+        	return;
+	}
+    	if (!(c$dns?$query)) {
+        	return;
+	}
 	local elements = split_string(c$dns$query, /\./);
 	local size_of_elements = 0;
 	local string_size = 0;
@@ -69,6 +87,15 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: vector o
 }
 
 event dns_CNAME_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string) {
+	if (!(c$id$resp_p in dns_ports)) {
+        	return;
+    	}
+	if (!(c?$dns)) {
+        	return;
+	}
+    	if (!(c$dns?$query)) {
+        	return;
+	}
 	local elements = split_string(c$dns$query, /\./);
 	local size_of_elements = 0;
 	local string_size = 0;
@@ -103,6 +130,15 @@ event dns_CNAME_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string
 }
 
 event dns_MX_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string, preference: count) {
+	if (!(c$id$resp_p in dns_ports)) {
+        	return;
+    	}
+	if (!(c?$dns)) {
+        	return;
+	}
+    	if (!(c$dns?$query)) {
+        	return;
+	}
 	local elements = split_string(c$dns$query, /\./);
 	local size_of_elements = 0;
 	local string_size = 0;

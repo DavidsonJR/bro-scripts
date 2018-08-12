@@ -18,7 +18,7 @@ event dns_message(c: connection, is_orig: bool, msg: dns_msg, len: count) {
 						if (direct_suppression[0] == 5) {
 							print fmt("Fingerprinted! DNSCAT Detected -- Attacking IP: %s | Victim IP: %s . Console Suppression for 10secs.", c$id$resp_h, c$id$orig_h);	
 							direct_suppression[0] += 1;
-						} else if (direct_suppression > 5) {
+						} else if (direct_suppression[0] > 5) {
 							return;
 						} else {
 							print fmt("Fingerprinted! DNSCAT Detected -- Attacking IP: %s | Victim IP: %s", c$id$resp_h, c$id$orig_h);
@@ -31,7 +31,7 @@ event dns_message(c: connection, is_orig: bool, msg: dns_msg, len: count) {
 						if (direct_suppression[1] == 5) {
 							print fmt("Fingerprinted! DNS2TCP Detected -- Attacking IP: %s | Victim IP: %s . Console Suppression for 10secs.", c$id$resp_h, c$id$orig_h);	
 							direct_suppression[1] += 1;
-						} else if (direct_suppression > 5) {
+						} else if (direct_suppression[1] > 5) {
 							return;
 						} else {
 							print fmt("Fingreprinted! DNS2TCP Detected -- Attacking IP: %s | Victim IP: %s", c$id$resp_h, c$id$orig_h);							
@@ -44,7 +44,7 @@ event dns_message(c: connection, is_orig: bool, msg: dns_msg, len: count) {
 						if (direct_suppression[2] == 5) {
 							print fmt("SUSPECT DNS: %s . Console Suppression for 10secs.", c$id$resp_h);
 							direct_suppression[2] += 1;
-						} else if (direct_suppression > 5) {
+						} else if (direct_suppression[2] > 5) {
 							return;
 						} else {
 							print fmt("SUSPECT DNS: %s", c$id$resp_h);
@@ -57,7 +57,7 @@ event dns_message(c: connection, is_orig: bool, msg: dns_msg, len: count) {
 					if (direct_suppression[3] == 5) {
 						print fmt("SUSPECT DNS: %s . Console Suppression for 10secs.", c$id$resp_h);
 						direct_suppression[3] += 1;
-					} else if (direct_suppression > 5) {
+					} else if (direct_suppression[3] > 5) {
 						return;
 					} else {
 						print fmt("SUSPECT DNS: %s", c$id$resp_h);
@@ -70,7 +70,7 @@ event dns_message(c: connection, is_orig: bool, msg: dns_msg, len: count) {
 				if (direct_suppression[4] == 5) {
 					print fmt("SUSPECT DNS: %s . Console Suppression for 10secs.", c$id$resp_h);
 					direct_suppression[4] += 1;
-				} else if (direct_suppression > 5) {
+				} else if (direct_suppression[4] > 5) {
 					return;
 				} else {
 					print fmt("SUSPECT DNS: %s", c$id$resp_h);

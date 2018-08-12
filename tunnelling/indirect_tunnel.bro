@@ -56,6 +56,9 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: vector o
     	if (!(c$dns?$query)) {
         	return;
 	}
+	if (domains in c$dns$query) {
+		return; #This is a whitelisted domain.
+	}
 	local elements = split_string(c$dns$query, /\./);
 	local size_of_elements = 0;
 	local string_size = 0;
@@ -99,6 +102,9 @@ event dns_CNAME_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string
     	if (!(c$dns?$query)) {
         	return;
 	}
+	if (domains in c$dns$query) {
+		return; #This is a whitelisted domain.
+	}
 	local elements = split_string(c$dns$query, /\./);
 	local size_of_elements = 0;
 	local string_size = 0;
@@ -141,6 +147,9 @@ event dns_MX_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string, p
 	}
     	if (!(c$dns?$query)) {
         	return;
+	}
+	if (domains in c$dns$query) {
+		return; #This is a whitelisted domain.
 	}
 	local elements = split_string(c$dns$query, /\./);
 	local size_of_elements = 0;

@@ -10,6 +10,7 @@ module TXT;
 
 const scripting_languages = /veil|python|powershell/ &redef;
 const base_64_string = /^[a-zA-Z0-9\/"$+.]*={0,2}$/ &redef;
+const base64_suppression: table[int] of count &default=0 &write_expire=10secs;
 
 event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_vec) {
 	SumStats::observe("dns.observe", [$host=c$id$orig_h], [$str=c$dns$query]);
@@ -42,7 +43,12 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_v
 	    		print fmt("%s has generate a keyword match: %s", c$id$orig_h, s4);
 		} else {
 	    		Log::write(TXT::LOG, [$evt="Base64 TXT Record Detected", $ts=network_time(), $id=c$id, $data=txt_str]);
-	    		print fmt("Base64 Detected: %s", txt_str);
+	    		if (base64_suppression[0] == 5) {
+				print fmt("Base64 Detected: %s . Console Suppression for 10secs.", txt_str);
+			} else {
+				print fmt("Base64 Detected: %s", txt_str);
+				base64_suppression[0] += 1;
+			}
 		}
 	} 
 }

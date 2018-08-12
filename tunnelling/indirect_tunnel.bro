@@ -81,7 +81,7 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: vector o
 			nums[1] = 0;
 			nums[2] = 1;
 		} else if (!(nums[2] == 1)) {
-			print fmt("SUSPECTED TUNNELLING -- TXT Response: %d characters in a subdomain", string_size);
+			print fmt("SUSPECTED TUNNELLING -- TXT Response: %d characters in a subdomain: %s", string_size, c$dns$query);
 			Log::write(TUNNELLING::LOG, [$evt="SUSPECTED TUNNELLING -- TXT", $ts=network_time(), $id=c$id, $data=c$dns$query]);
 		}
 	} else {
@@ -124,7 +124,7 @@ event dns_CNAME_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string
 			nums[1] = 0;
 			nums[2] = 1;
 		} else if (!(nums[2] == 1)) {
-			print fmt("SUSPECTED TUNNELLING -- CNAME Response: %d characters in a subdomain", string_size);
+			print fmt("SUSPECTED TUNNELLING -- CNAME Response: %d characters in a subdomain: %s", string_size, c$dns$query);
 			Log::write(TUNNELLING::LOG, [$evt="SUSPECTED TUNNELLING -- CNAME", $ts=network_time(), $id=c$id, $data=c$dns$query]);
 		}
 	} else {
@@ -167,7 +167,7 @@ event dns_MX_reply(c: connection, msg: dns_msg, ans: dns_answer, name: string, p
 			nums[1] = 0;
 			nums[2] = 1;
 		} else if (!(nums[2] == 1)) {
-			print fmt("SUSPECTED TUNNELLING -- MX Response: %d characters in a subdomain", string_size);
+			print fmt("SUSPECTED TUNNELLING -- MX Response: %d characters in a subdomain: %s", string_size, c$dns$query);
 			Log::write(TUNNELLING::LOG, [$evt="SUSPECTED TUNNELLING -- MX", $ts=network_time(), $id=c$id, $data=c$dns$query]);
 		}
 	} else {

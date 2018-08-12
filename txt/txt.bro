@@ -10,7 +10,7 @@ module TXT;
 
 const scripting_languages = /veil|python|powershell/ &redef;
 const base_64_string = /^[a-zA-Z0-9\/"$+.]*={0,2}$/ &redef;
-const base64_suppression: table[int] of count &default=0 &write_expire=10secs;
+global base64_suppression: table[int] of count &default=0 &write_expire=10secs;
 
 event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_vec) {
 	SumStats::observe("dns.observe", [$host=c$id$orig_h], [$str=c$dns$query]);

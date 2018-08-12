@@ -17,7 +17,7 @@ global dns_IPv4 = {
 };
 
 global dns_IPv6 {
-	[ff02:::::1:3],	#mDNS
+	[ff02:0:0:0:0:0:1:3],	#mDNS
 };
 
 global dns_ports = {

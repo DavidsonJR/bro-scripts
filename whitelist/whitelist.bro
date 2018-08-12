@@ -23,3 +23,11 @@ global dns_ports = {
 	5355/udp,
 	137/udp
 };
+
+global domains = {
+	.microsoft.com,				#Microsoft Servers	
+	.microsoft.com.akadns.net
+	
+	.apple.com,				#Apple Servers
+	.apple.com.akadns.net
+};

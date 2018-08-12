@@ -17,6 +17,9 @@ event dns_request (c: connection, msg: dns_msg, query: string, qtype: count, qcl
     	if (!(c$dns?$query)) {
         	return;
 	}
+	if (domains in c$dns$query) {
+		return; #This is a whitelisted domain.
+	}
 	local elements = split_string(c$dns$query, /\./);
 	local size_of_elements = 0;
 	local string_size = 0;

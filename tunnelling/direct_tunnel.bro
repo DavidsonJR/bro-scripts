@@ -6,7 +6,7 @@
 module TUNNELLING;
 
 event dns_message(c: connection, is_orig: bool, msg: dns_msg, len: count) {
-	if (!(c$id$resp_h in dns_v4_ip) || !(c$dns$resp_h in dns_v6_ip)) {
+	if (!(c$id$resp_h in dns_IPv4) || !(c$dns$resp_h in dns_IPv6)) {
 		if (c$id$resp_p in dns_ports) {
 			if (c?$dns) {
 				if (c$dns?$query) {

@@ -46,7 +46,7 @@ event dns_TXT_reply(c: connection, msg: dns_msg, ans: dns_answer, strs: string_v
 	    		if (base64_suppression[0] == 5) {
 				print fmt("Base64 Detected: %s . Console Suppression for 10secs.", txt_str);
 				base64_suppression[0] += 1;
-			} else if (bas64_suppression[0] > 5) {
+			} else if (base64_suppression[0] > 5) {
 				return;
 			} else {
 				print fmt("Base64 Detected: %s", txt_str);

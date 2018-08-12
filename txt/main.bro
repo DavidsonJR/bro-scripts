@@ -28,7 +28,7 @@ event bro_init() {
 		},
 		$threshold_crossed(key: SumStats::Key, result: SumStats::Result) = {
 			local r = result["dns.observe"];
-			print fmt("%s has made more than %.0f DNS queries and %d unique DNS queries.", key$host, r$sum, r$hll_unique);
+			print fmt("Suspicious Traffic: %s has made more than %.0f DNS TXT queries and %d unique DNS queries.", key$host, r$sum, r$hll_unique);
 			r_queries = r$sum;
 			r_unique = r$hll_unique;
 		}

@@ -28,4 +28,4 @@ global dns_ports = {
 	137/udp
 };
 
-global domains = /\.akadns\.net$|\.microsoft\.com$|\.apple\.com$/ &redef; #Whitelisted Mircosoft, Apple and Akamai, as a PoC.
+global domains = /\.akadns\.net$|\.microsoft\.com$|\.apple\.com$|\.live\.com$|\.msedge\.net$/ &redef; #Whitelisted Mircosoft, Apple and Akamai, as a PoC.

@@ -5,7 +5,7 @@
 
 #module WHITELIST;
 
-global dns_v4_ip = {
+global dns_IPv4 = {
 	8.8.8.8, 	#Google
 	8.8.4.4, 	#Google
 	2.2.2.2, 	#L3 Communications
@@ -16,8 +16,8 @@ global dns_v4_ip = {
 	224.0.0.252 
 };
 
-global dns_v6_ip {
-	ff02:0000:0000:0001:0003,	#mDNS
+global dns_IPv6 {
+	"ff02:0000:0000:0001:0003",	#mDNS
 };
 
 global dns_ports = {

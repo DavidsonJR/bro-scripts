@@ -17,7 +17,7 @@ global dns_IPv4 = {
 };
 
 global dns_IPv6 {
-	[ff02:::1:3],	#mDNS
+	[ff02:::1:3]/24,	#mDNS
 };
 
 global dns_ports = {
@@ -30,7 +30,7 @@ global dns_ports = {
 
 global domains = {
 	.microsoft.com,				#Microsoft Servers	
-	.microsoft.com.akadns.net
+	.microsoft.com.akadns.net,
 	
 	.apple.com,				#Apple Servers
 	.apple.com.akadns.net

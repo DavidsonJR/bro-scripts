@@ -47,7 +47,7 @@ event dns_message(c: connection, is_orig: bool, msg: dns_msg, len: count) {
 						} else if (direct_suppression[2] > 5) {
 							return;
 						} else {
-							print fmt("SUSPECT DNS: %s", c$id$resp_h);
+							print fmt("SUSPECT DNS: %s. DNS not whitelisted.", c$id$resp_h);
 							direct_suppression[2] += 1;
 						}
 					}
@@ -60,7 +60,7 @@ event dns_message(c: connection, is_orig: bool, msg: dns_msg, len: count) {
 					} else if (direct_suppression[3] > 5) {
 						return;
 					} else {
-						print fmt("SUSPECT DNS: %s", c$id$resp_h);
+						print fmt("SUSPECT DNS: %s. DNS not whitelisted.", c$id$resp_h);
 						direct_suppression[3] += 1;
 					}				
 				}
@@ -73,7 +73,7 @@ event dns_message(c: connection, is_orig: bool, msg: dns_msg, len: count) {
 				} else if (direct_suppression[4] > 5) {
 					return;
 				} else {
-					print fmt("SUSPECT DNS: %s", c$id$resp_h);
+					print fmt("SUSPECT DNS: %s. DNS not whitelisted.", c$id$resp_h);
 					direct_suppression[4] += 1;
 				}			
 			}
